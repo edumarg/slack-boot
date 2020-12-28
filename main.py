@@ -16,7 +16,7 @@ def send_time_message():
 def send_hourly_msg():
     while True:
         send_time_message()
-        time.sleep(3)
+        time.sleep(3600)
 
 def send_new_content():
     tweets = twitterAPI.get_new_content()
