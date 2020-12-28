@@ -27,9 +27,8 @@ Please select an option:
 [3] Quit
 >> ''')
 
-
         try:
-            if command.lower() == 'quit' or command.lower() == 'q' or int(command) == 10:
+            if command.lower() == 'quit' or command.lower() == 'q' or int(command) == 3:
                 global stop_thread
                 stop_thread = True
                 print('\nThank you and good bye')
@@ -37,7 +36,7 @@ Please select an option:
             elif int(command) == 1:
                 send_time_message()
             elif int(command) == 2:
-                return
+               continue
             elif 0 <= int(command) or int(command) > 2:
                 raise ValueError
         except ValueError:
@@ -52,7 +51,6 @@ def main():
     # any daemon threads are killed automatically.
     send_hourly_msg_thread.daemon = True
     send_hourly_msg_thread.start()
-    print("menu")
     menu()
 
 
