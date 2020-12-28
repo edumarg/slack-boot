@@ -4,6 +4,7 @@ import time
 import traceback
 
 import slackBot
+import twitterAPI
 
 
 def send_time_message():
@@ -17,6 +18,10 @@ def send_hourly_msg():
         send_time_message()
         time.sleep(3)
 
+def send_new_content():
+    tweets = twitterAPI.get_new_content()
+    for tweet in tweets:
+        slackBot.send_slack_message(tweet)
 
 def menu():
     while True:
@@ -31,12 +36,12 @@ Please select an option:
             if command.lower() == 'quit' or command.lower() == 'q' or int(command) == 3:
                 global stop_thread
                 stop_thread = True
-                print('\nThank you and good bye')
+                print('Thank you and good bye')
                 break
             elif int(command) == 1:
                 send_time_message()
             elif int(command) == 2:
-               continue
+                send_new_content()
             elif 0 <= int(command) or int(command) > 2:
                 raise ValueError
         except ValueError:
