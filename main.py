@@ -39,6 +39,21 @@ def send_my_new_content():
         time.sleep(600.0)
 
 
+def get_twitter_users(language):
+    twitter_users = []
+    if int(language) == 1:
+        twitter_users = ['PythonWeekly', 'realpython', 'fullstackpython']
+    elif int(language) == 2:
+        twitter_users = ["JavaScriptDaily"]
+    elif int(language) == 3:
+        twitter_users = ["CSharpStack"]
+    elif int(language) == 4:
+        twitter_users = ["lefticus"]
+    elif 0 <= int(language) or int(language) > 4:
+        raise ValueError
+    return twitter_users
+
+
 def menu():
     while True:
         command = input('''
@@ -56,21 +71,9 @@ Please select an option:
             elif int(command) == 1:
                 send_time_message()
             elif int(command) == 2:
-                # twitter_users = ['PythonWeekly', 'realpython', 'fullstackpython']
-                # send_new_content(twitter_users)
-                twitter_users=[]
                 language = input("Please choose language for type of content:\n"
                                    "[1] Python\n[2] JavaScript\n[3] C#\n[4] C++\n>>")
-                if int(language) == 1:
-                    twitter_users = ['PythonWeekly', 'realpython', 'fullstackpython']
-                elif int(language) == 2:
-                    twitter_users=["JavaScriptDaily"]
-                elif int(language) == 3:
-                    twitter_users = ["CSharpStack"]
-                elif int(language) == 4:
-                    twitter_users = ["lefticus"]
-                elif 0 <= int(command) or int(command) > 4:
-                    raise ValueError
+                twitter_users = get_twitter_users(language)
                 send_new_content(twitter_users)
             elif int(command) == 3:
                 message = input('Type message to tweet:\n>>>')
@@ -84,8 +87,6 @@ Please select an option:
                 raise ValueError
         except ValueError:
             print('Invalid entry, please select valid number from the list of options')
-        except TypeError:
-            print("There are no new Tweets")
 
 
 def main():
