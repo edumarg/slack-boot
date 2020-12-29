@@ -1,4 +1,5 @@
 from datetime import datetime
+from decouple import config
 from threading import Thread
 import time
 
@@ -19,24 +20,22 @@ def send_hourly_msg():
         time.sleep(3600)
 
 
-def send_tweet(tweets):
+def send_tweet_slack(tweets):
     if tweets:
         for tweet in tweets:
             slackBot.send_slack_message(tweet)
     else:
-        print("There are no new tweets")
-        menu()
+        pass
 
 
-def send_new_content(twitter_users):
-    tweets = twitterAPI.get_new_content(twitter_users)
-    send_tweet(tweets)
+def send_new_content(users):
+    tweets = twitterAPI.get_new_content(users)
+    send_tweet_slack(tweets)
 
 
 def send_my_new_content():
     while True:
-        tweets = twitterAPI.get_my_new_tweets()
-        send_tweet(tweets)
+        send_new_content([config('my_twitter_user')])
         time.sleep(600.0)
 
 
@@ -57,7 +56,21 @@ Please select an option:
             elif int(command) == 1:
                 send_time_message()
             elif int(command) == 2:
-                twitter_users = ['PythonWeekly', 'realpython', 'fullstackpython']
+                # twitter_users = ['PythonWeekly', 'realpython', 'fullstackpython']
+                # send_new_content(twitter_users)
+                twitter_users=[]
+                language = input("Please choose language for type of content:\n"
+                                   "[1] Python\n[2] JavaScript\n[3] C#\n[4] C++\n>>")
+                if int(language) == 1:
+                    twitter_users = ['PythonWeekly', 'realpython', 'fullstackpython']
+                elif int(language) == 2:
+                    twitter_users=["JavaScriptDaily"]
+                elif int(language) == 3:
+                    twitter_users = ["CSharpStack"]
+                elif int(language) == 4:
+                    twitter_users = ["lefticus"]
+                elif 0 <= int(command) or int(command) > 4:
+                    raise ValueError
                 send_new_content(twitter_users)
             elif int(command) == 3:
                 message = input('Type message to tweet:\n>>>')
@@ -67,7 +80,7 @@ Please select an option:
                     print("Message cannot be empty")
                 else:
                     twitterAPI.send_tweet(message)
-            elif 0 <= int(command) or int(command) > 3:
+            elif 0 <= int(command) or int(command) > 4:
                 raise ValueError
         except ValueError:
             print('Invalid entry, please select valid number from the list of options')
