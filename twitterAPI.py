@@ -14,8 +14,8 @@ api = tweepy.API(auth)
 
 
 def convert_twitter_date_to_timestamp(date):
-   # convert utc to loal time
-   # https://stackoverflow.com/questions/4563272/convert-a-python-utc-datetime-to-a-local-datetime-using-only-python-standard-lib
+    # convert utc to loal time
+    # https://stackoverflow.com/questions/4563272/convert-a-python-utc-datetime-to-a-local-datetime-using-only-python-standard-lib
     return date.replace(tzinfo=timezone.utc).astimezone(tz=None).timestamp()
 
 
@@ -37,8 +37,8 @@ def get_new_tweets(user_tweets, twitter_user, old_tweets):
 
 def get_user_new_tweets(user):
     try:
-       user_tweets = api.user_timeline(screen_name=user)
-       return get_new_tweets(user_tweets, user, old_user_tweets)
+        user_tweets = api.user_timeline(screen_name=user)
+        return get_new_tweets(user_tweets, user, old_user_tweets)
     except tweepy.TweepError:
         pass
 
