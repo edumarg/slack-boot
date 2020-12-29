@@ -1,0 +1,6 @@
+python-decouple==3.3
+python-dotenv==0.15.0
+pytz~=2020.5
+requests~=2.25.1
+tweepy==3.10.0
+
