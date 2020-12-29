@@ -3,7 +3,6 @@ from decouple import config
 from threading import Thread
 import time
 
-
 import slackBot
 import twitterAPI
 
@@ -72,7 +71,9 @@ Please select an option:
                 send_time_message()
             elif int(command) == 2:
                 language = input("Please choose language for type of content:\n"
-                                   "[1] Python\n[2] JavaScript\n[3] C#\n[4] C++\n>>")
+                                 "[1] Python\n[2] JavaScript\n[3] C#\n[4] C++\n[5] Back\n>>")
+                if int(language) == 5:
+                    continue
                 twitter_users = get_twitter_users(language)
                 send_new_content(twitter_users)
             elif int(command) == 3:
